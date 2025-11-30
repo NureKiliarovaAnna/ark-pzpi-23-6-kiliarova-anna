@@ -6,6 +6,6 @@
 
 Правила оформлення програмного коду мовою Python згідно з Python Style Guide (PEP 8) у контексті веб-програмування
 
-Методи рефакторингу коду на мові Python: застосування Collapse Hierarchy, Replace Nested Conditional with Guard Clauses та Replace Conditional with Polymorphism.
+Методи рефакторингу коду на мові C#: застосування Collapse Hierarchy, Replace Nested Conditional with Guard Clauses та Replace Conditional with Polymorphism.
 
 Програмна система для моніторингу свіжості продуктів у холодильнику
