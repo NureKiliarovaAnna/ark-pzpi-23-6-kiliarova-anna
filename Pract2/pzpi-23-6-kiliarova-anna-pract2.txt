@@ -1,0 +1,459 @@
+﻿Міністерство освіти і науки України
+Харківський національний університет радіоелектроніки
+
+Факультет комп’ютерних наук
+Кафедра програмної інженерії
+ 
+ 
+ 
+ЗВІТ
+до практичного завдання  №2
+з дисципліни «Аналіз та рефакторинґ коду»
+на тему «Методи рефакторингу коду на мові C#: застосування Collapse Hierarchy, Replace Nested Conditional with Guard Clauses та Replace Conditional with Polymorphism» 
+ 
+ 
+Виконала:                                                              	   Перевірив:
+ст. гр. ПЗПІ-23-6                                       	             ст. викладач катедри ПІ
+Кілярова Анна                                                            Сокорчук Ігор Петрович
+ 
+  
+
+
+Харків 2025
+1 ІСТОРІЯ ЗМІН
+№ДатаВерсіяОпис змін129.11.20250.1Створено усі розділи звіту230.11.20250.2Додано URL відеозапису
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 ЗАВДАННЯ
+Згідно з методичними вказівками до практичних занять, студент має:
+- обрати власний програмний код (курсовий або лабораторний проєкт);
+- проаналізувати його та виявити проблеми, пов’язані зі структурою, читабельністю або підтримуваністю;
+- застосувати класичні методи рефакторинґу: Collapse Hierarchy, Replace Nested Conditional with Guard Clauses, Replace Conditional with Polymorphism;
+- продемонструвати зміни на прикладах реального коду «до» і «після»;
+- пояснити отримані переваги і вплив рефакторингу на якість програмного забезпечення.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3 ОПИС ВИКОНАНОЇ РОБОТИ
+     3.1 Вихідний програмний контекст
+     У роботі використано власний програмний код з курсового проєкту «Interpol», реалізованого мовою C# у середовищі WinForms із використанням бази даних Microsoft Access (Interpol.accdb).
+     Ключові форми проєкту:
+- LoginForm — авторизація адміністратора;
+- MainForm — пошук, фільтрація, сортування записів;
+- Statistics — відображення статистичних звітів.
+Під час аналізу були виявлені такі проблеми коду:
+- дублювання логіки у сервісах авторизації;
+- глибоко вкладені умовні конструкції у LoginForm;
+- велика кількість switch-case із жорстким зв’язком між логікою побудови статистики та формою Statistics;
+- слабка гнучкість коду при розширенні функціоналу.
+3.2 Опис правил оформлення програмного коду
+Під час рефакторингу застосовано такі підходи:
+- дотримання C# Coding Conventions (Microsoft);
+- правильний відступ (4 пробіли);
+- зрозумілі та змістовні імена класів, методів та змінних;
+- уникання зайвих вкладень;
+- поділ відповідальності (SRP — Single Responsibility Principle);
+- використання інтерфейсів для реалізації поліморфізму.
+3.3 Програмні інструменти
+Маємо такі програмні інструменти:
+- Microsoft Visual Studio 2022 — середовище розробки;
+- .NET Framework 4.7.2 — платформа виконання;
+- WinForms — інструменти UI;
+- Microsoft Access (ACCDB) — база даних;
+- OleDbConnection — взаємодія з БД;
+- GitHub — для зберігання програмного коду.
+3.4 Застосування методу Collapse Hierarchy
+     Проблема: у програмі існував базовий клас AuthService та підклас AdminAuthService, який повністю дублював логіку базового класу.
+     Рішення: об’єднати класи – створити один повноцінний AuthService.
+     3.5 Застосування Replace Nested Conditional with Guard Clauses
+     Проблема: метод btnLogin_Click у LoginForm містив вкладені if, через що основний сценарій опинявся глибоко всередині.
+     Рішення: використати Guard Clauses для ранніх виходів та спрощення логіки.
+     Результат:
+- прибрана вкладеність;
+- покращена читабельність;
+- легше додавати нові перевірки.
+     3.6 Застосування Replace Conditional with Polymorphism
+     Проблема: у конструкторі Statistics використовувався великий switch(num) із чотирма гілками для різних типів статистики.
+     Рішення: створити інтерфейс IStatisticsReport та окремі класи для кожного виду статистики: CriminalStatisticsReport, CrimeStatisticsReport, WarrantStatisticsReport, CourtCaseStatisticsReport.
+     Переваги:
+- повне роз’єднання Statistics та логіки побудови звітів;
+- легке додавання нового типу статистики;
+- код став масштабованим і підтримуваним.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ВИСНОВКИ
+     У результаті виконання практичного завдання було розглянуто та застосовано класичні методи рефакторингу: Collapse Hierarchy, Replace Nested Conditional with Guard Clauses, Replace Conditional with Polymorphism; отримано навички аналізу вихідного коду та виділення архітектурних проблем; проведено рефакторинг на реальному проєкті «Interpol»; покращено структуру коду, читабельність та можливість розширення функціоналу; доведено практичну цінність методів рефакторингу у WinForms-додатках.
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+ВИКОРИСТАНІ ДЖЕРЕЛА
+1. Microsoft. C# documentation. Microsoft Learn. URL: https://learn.microsoft.com/en-us/dotnet/csharp/ (дата звернення: 29.11.2025).
+2. Interpol: курсовий проєкт. Код WinForms-додатку на мові C#. Автор: Кілярова А. П., ПЗПІ-23-6, 2024.
+3. Матеріали лекцій з дисципліни «Аналіз та рефакторинг коду». ХНУРЕ, 2025.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ДОДАТОК А
+Відеозапис доповіді: https://youtu.be/z4uEVoHobSo 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ДОДАТОК Б
+
+Рисунок Б.1 – Титульний слайд презентації
+
+Рисунок Б.2 – Мета роботи
+
+Рисунок Б.3 – Структура проєкту «Interpol» та проблеми коду
+
+Рисунок Б.4 – Метод Collapse Hierarchy: суть та опис
+
+Рисунок Б.5 – Приклад «до» застосування Collapse Hierarchy
+
+Рисунок Б.6 – Приклад «після» застосування Collapse Hierarchy
+
+Рисунок Б.7 – Replace Nested Conditional with Guard Clauses: суть методу
+
+Рисунок Б.8 – Guard Clauses: приклад «до»
+
+Рисунок Б.9 – Guard Clauses: приклад «після»
+
+Рисунок Б.10 – Replace Conditional with Polymorphism: опис проблеми та рішення
+
+Рисунок Б.11 – Polymorphism: приклад «до»
+
+Рисунок Б.12 – Polymorphism: приклад «після»
+
+Рисунок Б.13 – Підсумки виконаного рефакторингу
+
+Рисунок Б.14 – Список використаних джерел
+
+
+
+ДОДАТОК В
+     В.1 Приклад коду до рефакторингу (Collapse Hierarchy)
+     До застосування методу Collapse Hierarchy – зайва ієрархія класів AuthService / AdminAuthService:
+ 1  class AuthService
+ 2  {
+ 3      public virtual bool Authenticate(string login, string password)
+ 4      {
+ 5          // ...
+ 6      }
+ 7  }
+ 8
+ 9  class AdminAuthService : AuthService
+10  {
+11      // Фактично повторює базовий метод без змін
+12      public override bool Authenticate(string login, string password)
+13      {
+14          return base.Authenticate(login, password);
+15      }
+16  }
+
+     В.2 Код після рефакторингу (Collapse Hierarchy)
+     Об'єднання логіки в єдиний AuthService:
+  1  class AuthService
+ 2  {
+ 3      private readonly string _connectionString;
+ 4
+ 5      public AuthService(string connectionString)
+ 6      {
+ 7          _connectionString = connectionString;
+ 8      }
+ 9
+10      public bool Authenticate(string login, string password)
+11      {
+12          const string query =
+13              "SELECT COUNT(*) FROM admin WHERE login = @login AND password = @password";
+14
+15          using (var connection = new OleDbConnection(_connectionString))
+16          {
+17              connection.Open();
+18
+19              var command = new OleDbCommand(query, connection);
+20              command.Parameters.AddWithValue("@login", login);
+21              command.Parameters.AddWithValue("@password", password);
+22
+23              return Convert.ToInt32(command.ExecuteScalar()) > 0;
+24          }
+25      }
+26  }
+
+     В.3 Приклад коду до рефакторингу (Guard Clauses)
+     Початковий варіант btnLogin_Click з вкладеними умовами:
+ 1  private void btnLogin_Click(object sender, EventArgs e)
+ 2  {
+ 3      string login = txtLogin.Text;
+ 4      string password = txtPassword.Text;
+ 5
+ 6      if (!string.IsNullOrWhiteSpace(login))
+ 7      {
+ 8          if (!string.IsNullOrWhiteSpace(password))
+ 9          {
+10              if (password.Length >= 6)
+11              {
+12                  if (AuthenticateUser(login, password))
+13                  {
+14                      var mainForm = new MainForm();
+15                      this.Hide();
+16                      mainForm.ShowDialog();
+17                      this.Close();
+18                  }
+19                  else
+20                  {
+21                      MessageBox.Show("Невірний логін або пароль.");
+22                  }
+23              }
+24          }
+25      }
+26  }
+
+     В.4 Код після рефакторингу (Guard Clauses)
+     Рання перевірка умов, відсутність вкладеностей:
+ 1  private void btnLogin_Click(object sender, EventArgs e)
+ 2  {
+ 3      string login = txtLogin.Text;
+ 4      string password = txtPassword.Text;
+ 5
+ 6      if (string.IsNullOrWhiteSpace(login))
+ 7      {
+ 8          MessageBox.Show("Введіть логін.");
+ 9          return;
+10      }
+11
+12      if (string.IsNullOrWhiteSpace(password))
+13      {
+14          MessageBox.Show("Введіть пароль.");
+15          return;
+16      }
+17
+18      if (password.Length < 6)
+19      {
+20          MessageBox.Show("Пароль має містити щонайменше 6 символів.");
+21          return;
+22      }
+23
+24      if (!AuthenticateUser(login, password))
+25      {
+26          MessageBox.Show("Логін або пароль введено неправильно.");
+27          return;
+28      }
+29
+30      var mainForm = new MainForm();
+31      this.Hide();
+32      mainForm.ShowDialog();
+33      this.Close();
+34  }
+
+     В.5 Приклад коду до рефакторингу (Polymorphism)
+     Великий switch-case у Statistics:
+ 1  public Statistics(int num)
+ 2  {
+ 3      InitializeComponent();
+ 4      ClearDynamicControls();
+ 5
+ 6      switch (num)
+ 7      {
+ 8          case 1:
+ 9              this.Text = "Статистика про злочинців";
+10              CriminalStatistics();
+11              break;
+12
+13          case 2:
+14              this.Text = "Статистика про злочини";
+15              CrimeStatistics();
+16              break;
+17
+18          case 3:
+19              this.Text = "Статистика про міжнародні ордери";
+20              WarrantStatistics();
+21              break;
+22
+23          case 4:
+24              this.Text = "Статистика про судові справи";
+25              CourtCaseStatistics();
+26              break;
+27
+28          default:
+29              MessageBox.Show("Невідомий тип статистики.");
+30              break;
+31      }
+32  }
+
+     В.6 Код після рефакторингу (Polymorphism)
+     Інтерфейс та реалізація окремих звітів:
+
+ 1  public interface IStatisticsReport
+ 2  {
+ 3      string Title { get; }
+ 4      void Build(Statistics form);
+ 5  }
+ 6
+ 7  public class CriminalStatisticsReport : IStatisticsReport
+ 8  {
+ 9      public string Title => "Статистика про злочинців";
+10      public void Build(Statistics form) => form.CriminalStatistics();
+11  }
+12
+13  public class CrimeStatisticsReport : IStatisticsReport
+14  {
+15      public string Title => "Статистика про злочини";
+16      public void Build(Statistics form) => form.CrimeStatistics();
+17  }
+18
+19  public class WarrantStatisticsReport : IStatisticsReport
+20  {
+21      public string Title => "Статистика про міжнародні ордери";
+22      public void Build(Statistics form) => form.WarrantStatistics();
+23  }
+24
+25  public class CourtCaseStatisticsReport : IStatisticsReport
+26  {
+27      public string Title => "Статистика про судові справи";
+28      public void Build(Statistics form) => form.CourtCaseStatistics();
+29  }
+
+     В.7 Оновлений конструктор Statistics (після рефакторингу)
+ 1  public partial class Statistics : Form
+ 2  {
+ 3      public Statistics(IStatisticsReport report)
+ 4      {
+ 5          InitializeComponent();
+ 6          ClearDynamicControls();
+ 7
+ 8          this.Text = report.Title;
+ 9          report.Build(this);
+10      }
+11  }
+
+1
+
+
+
